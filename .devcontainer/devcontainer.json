@@ -4,6 +4,7 @@
   "service": "app",
   "workspaceFolder": "/workspace",
   "postCreateCommand": "npm install",
+  "postStartCommand": "git config --global --add safe.directory /workspace",
   "customizations": {
     "vscode": {
       "extensions": ["esbenp.prettier-vscode", "dbaeumer.vscode-eslint"]
