@@ -1,0 +1,36 @@
+export default function Page() {
+  return (
+    <div>
+      <div>タイトル</div>
+      <div>説明</div>
+      <div>イベント詳細</div>
+      <table>
+        <thead>
+          <tr>
+            <td></td>
+            <td>12/11</td>
+            <td>12/12</td>
+            <td>12/13</td>
+            <td>12/14</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>10:00</td>
+            <td>1人</td>
+            <td>4人</td>
+            <td>1人</td>
+            <td>2人</td>
+          </tr>
+          <tr>
+            <td>11:00</td>
+            <td>4人</td>
+            <td>5人</td>
+            <td>2人</td>
+            <td>1人</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
