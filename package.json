@@ -11,6 +11,9 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@mui/material": "^5.15.19",
+    "@mui/material-nextjs": "^5.15.11",
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18"
