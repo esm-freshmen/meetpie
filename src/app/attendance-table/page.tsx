@@ -1,4 +1,4 @@
-import AttendanceTable from '@/components/attendanceTable';
+import AttendanceTable from '@/app/attendance-table/_components/attendanceTable';
 
 export default function Page() {
   return (
