@@ -1,7 +1,7 @@
 function Header() {
   return (
-    <header className="bg-[#651616] h-[68px] flex items-center">
-      <h1 className="text-[#ffffff] text-3xl ml-4">Meet Pie</h1>
+    <header className="flex h-[68px] items-center bg-[#651616]">
+      <h1 className="ml-4 text-3xl text-[#ffffff]">Meet Pie</h1>
     </header>
   );
 }
