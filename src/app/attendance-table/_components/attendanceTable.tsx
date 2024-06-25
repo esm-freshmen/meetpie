@@ -23,15 +23,16 @@ function AttendanceTable() {
   ];
 
   return (
+    // TODO: テーブルの横幅を狭める
     <TableContainer component={Paper}>
-      <Table aria-label="simple table">
+      <Table aria-label="simple table" className="w-4/5">
         <TableHead>
           <TableRow>
-            <TableCell className="w-2"></TableCell>
-            <TableCell className="w-2">6/10</TableCell>
-            <TableCell className="w-2">6/11</TableCell>
-            <TableCell className="w-2">6/12</TableCell>
-            <TableCell className="w-2">6/13</TableCell>
+            <TableCell></TableCell>
+            <TableCell>6/10</TableCell>
+            <TableCell>6/11</TableCell>
+            <TableCell>6/12</TableCell>
+            <TableCell>6/13</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
