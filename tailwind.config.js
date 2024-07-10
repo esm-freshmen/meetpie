@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         brown: {
           DEFAULT: '#651616',
+          10: '#e0d0d0',
         },
         red: {
           DEFAULT: '#ca0e0e',

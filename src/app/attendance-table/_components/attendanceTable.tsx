@@ -1,7 +1,6 @@
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
@@ -24,29 +23,27 @@ function AttendanceTable() {
 
   return (
     // TODO: テーブルの横幅を狭める
-    <TableContainer component={Paper}>
-      <Table aria-label="simple table" className="w-4/5">
-        <TableHead>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell>6/10</TableCell>
-            <TableCell>6/11</TableCell>
-            <TableCell>6/12</TableCell>
-            <TableCell>6/13</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.time}>
-              <TableCell key={row.time}>{row.time}</TableCell>
-              {row.attendanceCounts.map((attendanceCount) => (
-                <TableCell key={attendanceCount}>{attendanceCount}</TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <table className="text-center">
+      <thead>
+        <tr>
+          <th className="w-[100px] bg-brown-10 border border-black"></th>
+          <th className="w-[100px] bg-brown-10 border border-black">6/10</th>
+          <th className="w-[100px] bg-brown-10 border border-black">6/11</th>
+          <th className="w-[100px] bg-brown-10 border border-black">6/12</th>
+          <th className="w-[100px] bg-brown-10 border border-black">6/13</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((row) => (
+          <tr>
+            <td className="bg-brown-10 border border-black">{row.time}</td>
+            {row.attendanceCounts.map((attendanceCount) => (
+              <td className="border border-black">{attendanceCount}</td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 }
 
