@@ -23,23 +23,23 @@ function AttendanceTable() {
 
   return (
     // TODO: テーブルの横幅を狭める
-    <table className="text-center">
+    <table className='text-center'>
       <thead>
         <tr>
-          <th className="w-[100px] border border-black bg-brown-10"></th>
-          <th className="w-[100px] border border-black bg-brown-10">6/10</th>
-          <th className="w-[100px] border border-black bg-brown-10">6/11</th>
-          <th className="w-[100px] border border-black bg-brown-10">6/12</th>
-          <th className="w-[100px] border border-black bg-brown-10">6/13</th>
+          <th className='w-[100px] border border-black bg-brown-10'></th>
+          <th className='w-[100px] border border-black bg-brown-10'>6/10</th>
+          <th className='w-[100px] border border-black bg-brown-10'>6/11</th>
+          <th className='w-[100px] border border-black bg-brown-10'>6/12</th>
+          <th className='w-[100px] border border-black bg-brown-10'>6/13</th>
         </tr>
       </thead>
       <tbody>
         {rows.map((row) => (
           <tr key={row.id}>
-            <td className="border border-black bg-brown-10">{row.time}</td>
+            <td className='border border-black bg-brown-10'>{row.time}</td>
             {row.attendanceCounts.map((attendanceCount) => (
               // eslint-disable-next-line react/jsx-key
-              <td className="border border-black">{attendanceCount}</td>
+              <td className='border border-black'>{attendanceCount}</td>
             ))}
           </tr>
         ))}
