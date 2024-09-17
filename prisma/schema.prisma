@@ -14,12 +14,14 @@ datasource db {
 }
 
 
-model UserInfo {
+model User {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255)
 
   Events Event[]
   attendances attendance[]
+
+	@@map("users")
 }
 
 model Event {
@@ -27,27 +29,33 @@ model Event {
   title String @db.VarChar(255)
   deadline DateTime @db.Date
   detail String? @db.Text
-  user_info UserInfo @relation(fields: [userId], references: [id])
-  userId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int @map("user_id")
 
   CandidateTimes CandidateTime[]
+
+  @@map("events")
 }
 
 model CandidateTime {
   id Int @id @default(autoincrement())
-  startTime DateTime @db.Timestamp()
+  startTime DateTime @db.Timestamp() @map("start_time")
   event Event @relation(fields: [eventId], references: [id])
-  eventId Int
+  eventId Int @map("event_id")
 
   attendances attendance[]
+
+  @@map("candidate_times")
 }
 
 model attendance {
   id Int @id @default(autoincrement())
   status String @db.VarChar(255)
   candidateTime CandidateTime @relation(fields: [candidateTimeId], references: [id])
-  candidateTimeId Int
+  candidateTimeId Int @map("candidate_time_id")
 
-  user_info UserInfo @relation(fields: [userId], references: [id])
-  userId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int @map("user_id")
+
+  @@map("attendances")
 }
