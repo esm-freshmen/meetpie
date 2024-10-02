@@ -15,8 +15,6 @@ services:
     restart: unless-stopped
     ports:
       - '5432:5432'
-    volumes:
-      - ../postgres-data:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_DB: meetpie
       POSTGRES_USER: user
