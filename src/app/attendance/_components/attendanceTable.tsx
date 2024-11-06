@@ -1,11 +1,17 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Tab } from '@mui/material';
-import { attachReactRefresh } from 'next/dist/build/webpack-config';
+import { tv } from 'tailwind-variants';
+
+const thStyle = tv({
+  base: 'w-[100px] border border-black bg-brown-10',
+});
+const tdStyle = tv({
+  base: 'border border-black bg-brown-10',
+  variants: {
+    bgColor: {
+      column: 'bg-brown-10',
+      field: '',
+    },
+  },
+});
 
 function AttendanceTable() {
   function createData(id: number, time: string, attendanceCounts: number[]) {
@@ -26,20 +32,24 @@ function AttendanceTable() {
     <table className='text-center'>
       <thead>
         <tr>
-          <th className='w-[100px] border border-black bg-brown-10'></th>
-          <th className='w-[100px] border border-black bg-brown-10'>6/10</th>
-          <th className='w-[100px] border border-black bg-brown-10'>6/11</th>
-          <th className='w-[100px] border border-black bg-brown-10'>6/12</th>
-          <th className='w-[100px] border border-black bg-brown-10'>6/13</th>
+          <th className={thStyle()}></th>
+          <th className={thStyle()}>6/11</th>
+          <th className={thStyle()}>6/12</th>
+          <th className={thStyle()}>6/13</th>
+          <th className={thStyle()}>6/14</th>
         </tr>
       </thead>
       <tbody>
         {rows.map((row) => (
           <tr key={row.id}>
-            <td className='border border-black bg-brown-10'>{row.time}</td>
+            <td key={row.id} className={tdStyle({ bgColor: 'column' })}>
+              {row.time}
+            </td>
             {row.attendanceCounts.map((attendanceCount) => (
               // eslint-disable-next-line react/jsx-key
-              <td className='border border-black'>{attendanceCount}</td>
+              <td className={tdStyle({ bgColor: 'field' })}>
+                {attendanceCount}
+              </td>
             ))}
           </tr>
         ))}
