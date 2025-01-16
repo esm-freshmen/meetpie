@@ -12,3 +12,13 @@
 ```bash
 npm run dev
 ```
+
+## Migrate DB
+
+```bash
+# create table
+npm run db-migrate-dev
+
+# insert records
+npm run db-seed-dev
+```
