@@ -1,5 +1,5 @@
 import AttendanceTable from '@/app/attendance/_components/attendanceTable';
-import { prisma } from '../lib';
+import { prisma } from '../../libs';
 
 export default async function Page() {
   const user = await prisma.user.findMany();
