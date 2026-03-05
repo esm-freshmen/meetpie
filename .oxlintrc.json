@@ -1,6 +1,15 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": null,
+  "plugins": [
+    "jsx-a11y",
+    "nextjs",
+    "react",
+    "react-perf",
+    "promise",
+    "jsdoc",
+    "eslint",
+    "vitest"
+  ],
   "categories": {},
   "rules": {},
   "settings": {
