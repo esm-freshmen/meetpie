@@ -1,9 +1,11 @@
 "use client";
 
+import { useActionState } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
-import * as v from "valibot";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "@conform-to/valibot";
+import { createEvent } from "@/app/action";
+import { EventSchema } from "@/schema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,22 +17,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const schema = v.object({
-  eventName: v.string(),
-  description: v.string(),
-});
-
 export default function Home() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, action] = useActionState(createEvent, undefined);
   const [form, fields] = useForm({
     onValidate({ formData }) {
-      return parseWithValibot(formData, { schema });
+      return parseWithValibot(formData, { schema: EventSchema });
     },
     shouldRevalidate: "onInput",
-    onSubmit(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log("submitされました！");
-    },
   });
 
   return (
@@ -38,7 +32,7 @@ export default function Home() {
       className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center `}
     >
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16sm:items-start">
-        <form {...getFormProps(form)} method="post" className="space-y-4">
+        <form {...getFormProps(form)} action={action} className="space-y-4">
           <div>
             <label htmlFor={fields.eventName.id}>イベント名</label>
             <input
