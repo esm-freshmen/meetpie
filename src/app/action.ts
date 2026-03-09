@@ -1,6 +1,5 @@
 "use server";
 
-import * as v from "valibot";
 import { parseWithValibot } from "@conform-to/valibot";
 import { eventSchema } from "@/schema";
 
