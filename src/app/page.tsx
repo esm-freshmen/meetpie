@@ -5,7 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "@conform-to/valibot";
 import { createEvent } from "@/app/action";
-import { EventSchema } from "@/schema";
+import { eventSchema } from "@/schema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,7 +22,7 @@ export default function Home() {
   const [_, action] = useActionState(createEvent, undefined);
   const [form, fields] = useForm({
     onValidate({ formData }) {
-      return parseWithValibot(formData, { schema: EventSchema });
+      return parseWithValibot(formData, { schema: eventSchema });
     },
     shouldRevalidate: "onInput",
   });
