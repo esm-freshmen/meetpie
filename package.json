@@ -14,9 +14,12 @@
   "dependencies": {
     "next": "16.1.6",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "valibot": "^1.2.0"
   },
   "devDependencies": {
+    "@conform-to/react": "^1.17.1",
+    "@conform-to/valibot": "^1.17.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",

@@ -17,7 +17,16 @@ importers:
       react-dom:
         specifier: 19.2.3
         version: 19.2.3(react@19.2.3)
+      valibot:
+        specifier: ^1.2.0
+        version: 1.2.0(typescript@5.9.3)
     devDependencies:
+      '@conform-to/react':
+        specifier: ^1.17.1
+        version: 1.17.1(react@19.2.3)
+      '@conform-to/valibot':
+        specifier: ^1.17.1
+        version: 1.17.1(valibot@1.2.0(typescript@5.9.3))
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.18
@@ -118,6 +127,19 @@ packages:
   '@babel/types@7.29.0':
     resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
+
+  '@conform-to/dom@1.17.1':
+    resolution: {integrity: sha512-vpwCodVVWpQ6kbrlu5F85BC99ozDxqcrhmt+YDD81bCwvt6NtiycFID3NQQGQyn+bzmpb4qlF3Ay9YcljnrNHw==}
+
+  '@conform-to/react@1.17.1':
+    resolution: {integrity: sha512-AXj6HMiG0e6mJXzVNDmeQ9FH4LbGA4HdSt+a0Yb09kEnpESkK3zCopFb8RkO8kls4XMQO05KAmaE6KDlhSzprQ==}
+    peerDependencies:
+      react: '>=18'
+
+  '@conform-to/valibot@1.17.1':
+    resolution: {integrity: sha512-rEV2Hr+luYY5J8xtC5T1lQTbzmpWascHBsON1BDUx/DhNoJZI3Fm7Dn+DEBrf38gNLgN8ztcnXCmNUdye0YNUg==}
+    peerDependencies:
+      valibot: '>= 0.32.0'
 
   '@emnapi/core@1.8.1':
     resolution: {integrity: sha512-AvT9QFpxK0Zd8J0jopedNm+w/2fIzvtPKPjqyw9jwvBaReTTqPBk9Hixaz7KbjimP+QNz605/XnjFcDAL2pqBg==}
@@ -2113,6 +2135,14 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
+  valibot@1.2.0:
+    resolution: {integrity: sha512-mm1rxUsmOxzrwnX5arGS+U4T25RdvpPjPN4yR0u9pUBov9+zGVtO84tif1eY4r6zWxVxu3KzIyknJy3rxfRZZg==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   which-boxed-primitive@1.1.1:
     resolution: {integrity: sha512-TbX3mj8n0odCBFVlY8AxkqcHASw3L60jIuF8jFP78az3C2YhmGvqbHBpAjTRH2/xqYunrJ9g1jSyjCjpoWzIAA==}
     engines: {node: '>= 0.4'}
@@ -2257,6 +2287,18 @@ snapshots:
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
+
+  '@conform-to/dom@1.17.1': {}
+
+  '@conform-to/react@1.17.1(react@19.2.3)':
+    dependencies:
+      '@conform-to/dom': 1.17.1
+      react: 19.2.3
+
+  '@conform-to/valibot@1.17.1(valibot@1.2.0(typescript@5.9.3))':
+    dependencies:
+      '@conform-to/dom': 1.17.1
+      valibot: 1.2.0(typescript@5.9.3)
 
   '@emnapi/core@1.8.1':
     dependencies:
@@ -4361,6 +4403,10 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  valibot@1.2.0(typescript@5.9.3):
+    optionalDependencies:
+      typescript: 5.9.3
 
   which-boxed-primitive@1.1.1:
     dependencies:
