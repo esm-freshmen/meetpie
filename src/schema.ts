@@ -1,7 +1,17 @@
 import * as v from 'valibot';
 
+const dayOfWeek = {
+  mon: '月',
+  tue: '火',
+  wed: '水',
+  thu: '木',
+  fri: '金'
+} as const;
+export const dayOfWeekValues = Object.values(dayOfWeek);
+
 export const eventSchema = v.object({
   eventName: v.string(),
   description: v.string(),
-  dayOfWeek: v.array(v.string())
+  dayOfWeek: v.array(v.union(dayOfWeekValues.map((value) => v.literal(value))))
+  // TODO: 時間指定
 });

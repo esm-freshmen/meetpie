@@ -5,7 +5,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import { getFormProps, getInputProps, useForm } from '@conform-to/react';
 import { parseWithValibot } from '@conform-to/valibot';
 import { createEvent } from '@/app/action';
-import { eventSchema } from '@/schema';
+import { dayOfWeekValues, eventSchema } from '@/schema';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -43,7 +43,7 @@ export default function Home() {
           </div>
           <fieldset>
             曜日
-            {['月', '火', '水', '木', '金'].map((value) => (
+            {dayOfWeekValues.map((value) => (
               <div key={value}>
                 <label>{value}</label>
                 <input
