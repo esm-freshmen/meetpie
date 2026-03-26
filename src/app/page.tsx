@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useActionState } from 'react';
-import { Geist, Geist_Mono } from 'next/font/google';
-import { getFormProps, getInputProps, useForm } from '@conform-to/react';
-import { parseWithValibot } from '@conform-to/valibot';
-import { createEvent } from '@/app/action';
-import { dayOfWeekValues, eventSchema } from '@/schema';
+import { useActionState } from "react";
+import { Geist, Geist_Mono } from "next/font/google";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { parseWithValibot } from "@conform-to/valibot";
+import { createEvent } from "@/app/action";
+import { dayOfWeekValues, eventSchema } from "@/schema";
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin']
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export default function Home() {
@@ -24,22 +24,35 @@ export default function Home() {
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: eventSchema });
     },
-    shouldRevalidate: 'onInput'
+    shouldRevalidate: "onInput",
   });
 
+  console.log(form.allErrors);
   return (
-    <div className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center `}>
+    <div
+      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center `}
+    >
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16sm:items-start">
         <form {...getFormProps(form)} action={action} className="space-y-4">
           <div>
             <label htmlFor={fields.eventName.id}>イベント名</label>
-            <input {...getInputProps(fields.eventName, { type: 'text' })} className="outline outline-cyan-400" />
-            {fields.eventName.errors && <p className="text-red-500">{fields.eventName.errors[0]}</p>}
+            <input
+              {...getInputProps(fields.eventName, { type: "text" })}
+              className="outline outline-cyan-400"
+            />
+            {fields.eventName.errors && (
+              <p className="text-red-500">{fields.eventName.errors[0]}</p>
+            )}
           </div>
           <div>
             <label htmlFor={fields.description.id}>説明</label>
-            <input {...getInputProps(fields.description, { type: 'text' })} className="outline outline-cyan-400" />
-            {fields.description.errors && <p className="text-red-500">{fields.description.errors[0]}</p>}
+            <input
+              {...getInputProps(fields.description, { type: "text" })}
+              className="outline outline-cyan-400"
+            />
+            {fields.description.errors && (
+              <p className="text-red-500">{fields.description.errors[0]}</p>
+            )}
           </div>
           <fieldset>
             曜日
@@ -51,15 +64,29 @@ export default function Home() {
                   name={fields.dayOfWeek.name}
                   value={value}
                   defaultChecked={
-                    fields.dayOfWeek.initialValue && Array.isArray(fields.dayOfWeek.initialValue)
+                    fields.dayOfWeek.initialValue &&
+                    Array.isArray(fields.dayOfWeek.initialValue)
                       ? fields.dayOfWeek.initialValue.includes(value)
                       : fields.dayOfWeek.initialValue === value
                   }
                 />
               </div>
             ))}
-            {fields.dayOfWeek.errors && <p className="text-red-500">{fields.dayOfWeek.errors[0]}</p>}
+            {fields.dayOfWeek.errors && (
+              <p className="text-red-500">{fields.dayOfWeek.errors[0]}</p>
+            )}
           </fieldset>
+          <div>
+            時間
+            <input {...getInputProps(fields.startTime, { type: "time" })} />
+            <span>〜</span>
+            <input {...getInputProps(fields.endTime, { type: "time" })} />
+            {(fields.startTime.errors || fields.endTime.errors) && (
+              <p className="text-red-500">
+                {fields.startTime.errors?.at(0) ?? fields.endTime.errors?.at(0)}
+              </p>
+            )}
+          </div>
           <button>作成</button>
         </form>
       </main>
