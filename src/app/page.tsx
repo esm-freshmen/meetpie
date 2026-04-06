@@ -62,16 +62,11 @@ export default function Home() {
                   {value}
                 </label>
                 <input
-                  type="checkbox"
-                  name={fields.dayOfWeek.name}
+                  {...getInputProps(fields.dayOfWeek, {
+                    type: "checkbox",
+                    value,
+                  })}
                   id={`${fields.dayOfWeek.id}-${value}`}
-                  value={value}
-                  defaultChecked={
-                    fields.dayOfWeek.initialValue &&
-                    Array.isArray(fields.dayOfWeek.initialValue)
-                      ? fields.dayOfWeek.initialValue.includes(value)
-                      : fields.dayOfWeek.initialValue === value
-                  }
                 />
               </div>
             ))}
