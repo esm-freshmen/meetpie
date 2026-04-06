@@ -5,7 +5,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { parseWithValibot } from "@conform-to/valibot";
 import { createEvent } from "@/app/action";
-import { eventSchema } from "@/schema";
+import { dayOfWeekValues, eventSchema } from "@/schema";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +27,7 @@ export default function Home() {
     shouldRevalidate: "onInput",
   });
 
+  console.log(form.allErrors);
   return (
     <div
       className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center `}
@@ -37,7 +38,7 @@ export default function Home() {
             <label htmlFor={fields.eventName.id}>イベント名</label>
             <input
               {...getInputProps(fields.eventName, { type: "text" })}
-              className="outline outline-cyan-400"
+              className="outline"
             />
             {fields.eventName.errors && (
               <p className="text-red-500">{fields.eventName.errors[0]}</p>
@@ -47,10 +48,41 @@ export default function Home() {
             <label htmlFor={fields.description.id}>説明</label>
             <input
               {...getInputProps(fields.description, { type: "text" })}
-              className="outline outline-cyan-400"
+              className="outline"
             />
             {fields.description.errors && (
               <p className="text-red-500">{fields.description.errors[0]}</p>
+            )}
+          </div>
+          <fieldset>
+            <label>曜日</label>
+            {dayOfWeekValues.map((value) => (
+              <div key={value}>
+                <label htmlFor={`${fields.dayOfWeek.id}-${value}`}>
+                  {value}
+                </label>
+                <input
+                  {...getInputProps(fields.dayOfWeek, {
+                    type: "checkbox",
+                    value,
+                  })}
+                  id={`${fields.dayOfWeek.id}-${value}`}
+                />
+              </div>
+            ))}
+            {fields.dayOfWeek.errors && (
+              <p className="text-red-500">{fields.dayOfWeek.errors[0]}</p>
+            )}
+          </fieldset>
+          <div>
+            <label htmlFor={fields.startTime.id}>時間</label>
+            <input {...getInputProps(fields.startTime, { type: "time" })} />
+            <span>〜</span>
+            <input {...getInputProps(fields.endTime, { type: "time" })} />
+            {(fields.startTime.errors || fields.endTime.errors) && (
+              <p className="text-red-500">
+                {fields.startTime.errors?.at(0) ?? fields.endTime.errors?.at(0)}
+              </p>
             )}
           </div>
           <button>作成</button>
