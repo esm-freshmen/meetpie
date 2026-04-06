@@ -38,7 +38,7 @@ export default function Home() {
             <label htmlFor={fields.eventName.id}>イベント名</label>
             <input
               {...getInputProps(fields.eventName, { type: "text" })}
-              className="outline outline-cyan-400"
+              className="outline"
             />
             {fields.eventName.errors && (
               <p className="text-red-500">{fields.eventName.errors[0]}</p>
@@ -48,20 +48,23 @@ export default function Home() {
             <label htmlFor={fields.description.id}>説明</label>
             <input
               {...getInputProps(fields.description, { type: "text" })}
-              className="outline outline-cyan-400"
+              className="outline"
             />
             {fields.description.errors && (
               <p className="text-red-500">{fields.description.errors[0]}</p>
             )}
           </div>
           <fieldset>
-            曜日
+            <label>曜日</label>
             {dayOfWeekValues.map((value) => (
               <div key={value}>
-                <label>{value}</label>
+                <label htmlFor={`${fields.dayOfWeek.id}-${value}`}>
+                  {value}
+                </label>
                 <input
                   type="checkbox"
                   name={fields.dayOfWeek.name}
+                  id={`${fields.dayOfWeek.id}-${value}`}
                   value={value}
                   defaultChecked={
                     fields.dayOfWeek.initialValue &&
@@ -77,7 +80,7 @@ export default function Home() {
             )}
           </fieldset>
           <div>
-            時間
+            <label htmlFor={fields.startTime.id}>時間</label>
             <input {...getInputProps(fields.startTime, { type: "time" })} />
             <span>〜</span>
             <input {...getInputProps(fields.endTime, { type: "time" })} />
