@@ -35,21 +35,31 @@ export default function Home() {
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16sm:items-start">
         <form {...getFormProps(form)} action={action} className="space-y-4">
           <div>
-            <label htmlFor={fields.eventName.id}>イベント名</label>
-            <input
-              {...getInputProps(fields.eventName, { type: "text" })}
-              className="outline"
-            />
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">
+                <label htmlFor={fields.eventName.id}>イベント名</label>
+              </legend>
+              <input
+                {...getInputProps(fields.eventName, { type: "text" })}
+                className="input"
+                placeholder="Type here"
+              />
+            </fieldset>
             {fields.eventName.errors && (
               <p className="text-red-500">{fields.eventName.errors[0]}</p>
             )}
           </div>
           <div>
-            <label htmlFor={fields.description.id}>説明</label>
-            <input
-              {...getInputProps(fields.description, { type: "text" })}
-              className="outline"
-            />
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">
+                <label htmlFor={fields.description.id}>説明</label>
+              </legend>
+              <input
+                {...getInputProps(fields.description, { type: "text" })}
+                className="input"
+                placeholder="Type here"
+              />
+            </fieldset>
             {fields.description.errors && (
               <p className="text-red-500">{fields.description.errors[0]}</p>
             )}
