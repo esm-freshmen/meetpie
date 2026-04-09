@@ -76,6 +76,8 @@ export default function Home() {
                     type: "checkbox",
                     value,
                   })}
+                  defaultChecked
+                  className="checkbox checkbox-primary"
                   id={`${fields.dayOfWeek.id}-${value}`}
                 />
               </div>
