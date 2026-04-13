@@ -38,25 +38,36 @@ export function TimeSlider({ formId }: { formId: FormId<Event> }) {
       <label>
         時間: {hoursToTime(startHours)} 〜 {hoursToTime(endHours)}
       </label>
-      <Slider
-        min={0}
-        max={24}
-        step={0.5}
-        defaultValue={[startHours, endHours]}
-        className="range range-primary mx-4"
-        onValueChange={([start, end]) => {
-          startControl.change(hoursToTime(start));
-          endControl.change(hoursToTime(end));
-        }}
-        onBlur={() => {
-          startControl.blur();
-          endControl.blur();
-        }}
-      />
-      <div className="flex justify-between mx-4 text-xs text-muted-foreground">
-        {[0, 6, 12, 18, 24].map((h) => (
-          <span key={h}>{hoursToTime(h)}</span>
-        ))}
+      <div className="px-4">
+        <Slider
+         min={0}
+          max={24}
+          step={0.5}
+          defaultValue={[startHours, endHours]}
+          className="range range-primary overflow-visible"
+          onValueChange={([start, end]) => {
+            startControl.change(hoursToTime(start));
+            endControl.change(hoursToTime(end));
+          }}
+          onBlur={() => {
+            startControl.blur();
+            endControl.blur();
+          }}
+        />
+        <div className="relative h-4">
+          {[0, 6, 12, 18, 24].map((h) => (
+            <span
+              key={h}
+              className="absolute text-[10px] text-muted-foreground"
+              style={{
+                left: `${(h / 24) * 100}%`,
+                transform: "translateX(-50%)",
+              }}
+            >
+              {hoursToTime(h)}
+            </span>
+          ))}
+        </div>
       </div>
       {(startField.errors || endField.errors) && (
         <p className="text-red-500">
