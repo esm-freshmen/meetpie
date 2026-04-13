@@ -5,3 +5,7 @@
 @plugin "daisyui" {
   themes: bumblebee --default;
 }
+
+@theme {
+  --color-muted: var(--color-base-300);
+}

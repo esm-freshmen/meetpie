@@ -16,3 +16,5 @@ export const eventSchema = v.object({
   startTime: v.pipe(v.string(), v.isoTime("The time is badly formatted.")),
   endTime: v.pipe(v.string(), v.isoTime("The time is badly formatted.")),
 });
+
+export type Event = v.InferInput<typeof eventSchema>;
