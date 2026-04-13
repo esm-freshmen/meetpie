@@ -97,7 +97,7 @@ export default function Home() {
               </p>
             )}
           </div>
-          <button>作成</button>
+          <button className="btn btn-primary">作成</button>
         </form>
       </main>
     </div>
