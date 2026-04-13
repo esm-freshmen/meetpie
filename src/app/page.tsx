@@ -2,10 +2,16 @@
 
 import { useActionState } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import {
+  getFormProps,
+  getInputProps,
+  useForm,
+  useInputControl,
+} from "@conform-to/react";
 import { parseWithValibot } from "@conform-to/valibot";
 import { createEvent } from "@/app/action";
 import { dayOfWeekValues, eventSchema } from "@/schema";
+import { Slider } from "@/components/ui/slider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +23,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const hoursToTime = (hours: number): string => {
+  const h = Math.floor(hours).toString().padStart(2, "0");
+  const m = hours % 1 === 0.5 ? "30" : "00";
+  return `${h}:${m}`;
+};
+
+const timeToHours = (time: string): number => {
+  if (!time) return 0;
+  const [h, m] = time.split(":").map(Number);
+  return h + (m || 0) / 60;
+};
+
 export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, action] = useActionState(createEvent, undefined);
@@ -25,7 +43,17 @@ export default function Home() {
       return parseWithValibot(formData, { schema: eventSchema });
     },
     shouldRevalidate: "onInput",
+    defaultValue: {
+      startTime: "9",
+      endTime: "18"
+    }
   });
+
+  const startTimeControl = useInputControl(fields.startTime);
+  const endTimeControl = useInputControl(fields.endTime);
+
+  const startHours = timeToHours(startTimeControl.value ?? "")
+  const endHours = timeToHours(endTimeControl.value ?? "")
 
   console.log(form.allErrors);
   return (
@@ -86,11 +114,28 @@ export default function Home() {
               <p className="text-red-500">{fields.dayOfWeek.errors[0]}</p>
             )}
           </fieldset>
-          <div>
-            <label htmlFor={fields.startTime.id}>時間</label>
-            <input {...getInputProps(fields.startTime, { type: "time" })} />
-            <span>〜</span>
-            <input {...getInputProps(fields.endTime, { type: "time" })} />
+          <div className="space-y-2">
+            <label>
+              時間: {hoursToTime(startHours)} 〜 {hoursToTime(endHours)}
+            </label>
+            <input {...getInputProps(fields.startTime, { type: "hidden" })} />
+            <input {...getInputProps(fields.endTime, { type: "hidden" })} />
+            <Slider
+              min={0}
+              max={24}
+              step={0.5}
+              // value={[startHours, endHours]}
+              defaultValue={[ startHours, endHours]}
+              className="range range-primary"
+              onValueChange={([start, end]) => {
+                startTimeControl.change(hoursToTime(start));
+                endTimeControl.change(hoursToTime(end));
+              }}
+              onBlur={() => {
+                startTimeControl.blur();
+                endTimeControl.blur();
+              }}
+            />
             {(fields.startTime.errors || fields.endTime.errors) && (
               <p className="text-red-500">
                 {fields.startTime.errors?.at(0) ?? fields.endTime.errors?.at(0)}
