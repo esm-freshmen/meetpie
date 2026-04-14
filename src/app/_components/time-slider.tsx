@@ -5,7 +5,7 @@ import {
   useFormMetadata,
   useInputControl,
 } from "@conform-to/react";
-import type { FieldMetadata, FormId } from "@conform-to/react";
+import type { FormId } from "@conform-to/react";
 import { Slider } from "@/components/ui/slider";
 import { Event } from "@/schema";
 
@@ -18,7 +18,7 @@ const hoursToTime = (hours: number): string => {
 const timeToHours = (time = ""): number => {
   if (!time || !time.includes(":")) return 0;
   const [h, m] = time.split(":").map(Number);
-  return h + m  / 60;
+  return h + m / 60;
 };
 
 export function TimeSlider({ formId }: { formId: FormId<Event> }) {
@@ -40,7 +40,7 @@ export function TimeSlider({ formId }: { formId: FormId<Event> }) {
       </label>
       <div className="px-4">
         <Slider
-         min={0}
+          min={0}
           max={24}
           step={0.5}
           defaultValue={[startHours, endHours]}

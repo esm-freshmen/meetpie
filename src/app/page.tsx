@@ -44,7 +44,11 @@ export default function Home() {
     >
       <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
         <FormProvider context={form.context}>
-          <form {...getFormProps(form)} action={action} className="w-full max-w-sm space-y-4">
+          <form
+            {...getFormProps(form)}
+            action={action}
+            className="w-full max-w-sm space-y-4"
+          >
             <div>
               <fieldset className="fieldset">
                 <legend className="fieldset-legend">
