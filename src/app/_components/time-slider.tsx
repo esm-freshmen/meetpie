@@ -35,7 +35,7 @@ export function TimeSlider({ formId }: { formId: FormId<Event> }) {
     <div className="space-y-2">
       <input {...getInputProps(startField, { type: "hidden" })} />
       <input {...getInputProps(endField, { type: "hidden" })} />
-      <label>
+      <label id="time-slider-label">
         時間: {hoursToTime(startHours)} 〜 {hoursToTime(endHours)}
       </label>
       <div className="px-4">
@@ -43,8 +43,9 @@ export function TimeSlider({ formId }: { formId: FormId<Event> }) {
           min={0}
           max={24}
           step={0.5}
-          defaultValue={[startHours, endHours]}
+          value={[startHours, endHours]}
           className="range range-primary overflow-visible"
+          aria-labelledby="time-slider-label"
           onValueChange={([start, end]) => {
             startControl.change(hoursToTime(start));
             endControl.change(hoursToTime(end));
