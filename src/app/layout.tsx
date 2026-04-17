@@ -34,7 +34,12 @@ function Header({ user }: { user: Session["user"] }) {
       {user && (
         <div className="flex-none">
           <div className="dropdown dropdown-end">
-            <button tabIndex={0} className="btn btn-ghost btn-circle avatar" aria-label="ユーザーメニュー" aria-haspopup="menu">
+            <button
+              tabIndex={0}
+              className="btn btn-ghost btn-circle avatar"
+              aria-label="ユーザーメニュー"
+              aria-haspopup="menu"
+            >
               <div className="w-10 rounded-full">
                 {user.image ? (
                   <Image

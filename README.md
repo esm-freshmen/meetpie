@@ -30,8 +30,8 @@ cp .env.test .env.local
 | 変数名               | 説明                                                       |
 | -------------------- | ---------------------------------------------------------- |
 | `AUTH_SECRET`        | セッション暗号化用シークレット（`npx auth secret` で生成） |
-| `AUTH_GOOGLE_ID`     | Google OAuth クライアント ID（**要置き換え**）              |
-| `AUTH_GOOGLE_SECRET` | Google OAuth クライアントシークレット（**要置き換え**）     |
+| `AUTH_GOOGLE_ID`     | Google OAuth クライアント ID（**要置き換え**）             |
+| `AUTH_GOOGLE_SECRET` | Google OAuth クライアントシークレット（**要置き換え**）    |
 
 ### 3. Google OAuth クライアントの作成
 
