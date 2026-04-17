@@ -4,6 +4,7 @@ import type { Session } from "next-auth";
 import { Geist, Geist_Mono } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { handleSignOut } from "@/app/action";
 
@@ -33,7 +34,7 @@ function Header({ user }: { user: Session["user"] }) {
       {user && (
         <div className="flex-none">
           <div className="dropdown dropdown-end">
-            <button tabIndex={0} className="btn btn-ghost btn-circle avatar">
+            <button tabIndex={0} className="btn btn-ghost btn-circle avatar" aria-label="ユーザーメニュー" aria-haspopup="menu">
               <div className="w-10 rounded-full">
                 {user.image ? (
                   <Image
@@ -75,7 +76,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await auth();
-  if (!session) return null;
+  if (!session) redirect("/api/auth/signin");
 
   return (
     <html lang="en">

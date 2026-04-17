@@ -18,17 +18,20 @@ pnpm install
 
 ### 2. 環境変数の設定
 
-`.env.local` を作成して以下の値を設定する。
+`.env.test` を雛形として `.env.local` を作成する。
 
 ```bash
 cp .env.test .env.local
 ```
 
+> **注意:** `.env.test` の `AUTH_GOOGLE_ID` と `AUTH_GOOGLE_SECRET` はダミー値です。
+> コピー後、必ず実際の値に置き換えてください（手順 3 を参照）。
+
 | 変数名               | 説明                                                       |
 | -------------------- | ---------------------------------------------------------- |
 | `AUTH_SECRET`        | セッション暗号化用シークレット（`npx auth secret` で生成） |
-| `AUTH_GOOGLE_ID`     | Google OAuth クライアント ID                               |
-| `AUTH_GOOGLE_SECRET` | Google OAuth クライアントシークレット                      |
+| `AUTH_GOOGLE_ID`     | Google OAuth クライアント ID（**要置き換え**）              |
+| `AUTH_GOOGLE_SECRET` | Google OAuth クライアントシークレット（**要置き換え**）     |
 
 ### 3. Google OAuth クライアントの作成
 
@@ -72,10 +75,26 @@ const session = await auth();
 
 ### クライアントコンポーネント
 
-```ts
-import { useSession } from "next-auth/react";
+このプロジェクトでは `SessionProvider` を導入していないため `useSession()` は使用できません。
+クライアントコンポーネントでセッション情報が必要な場合は、サーバーコンポーネントから props として渡してください。
 
-const { data: session } = useSession();
+```tsx
+// サーバーコンポーネント（例: layout.tsx）
+import { auth } from "@/auth";
+
+const session = await auth();
+return <ClientComponent user={session?.user} />;
+```
+
+```tsx
+// クライアントコンポーネント
+"use client";
+
+import type { Session } from "next-auth";
+
+export function ClientComponent({ user }: { user: Session["user"] }) {
+  // user.name, user.email などを利用
+}
 ```
 
 ### サインイン / サインアウト（Server Actions）
