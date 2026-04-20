@@ -10,13 +10,21 @@
 
 ## セットアップ
 
-### 1. 依存関係のインストール
+### Node.js & Pulumi インストール
+asdf
+```bash
+asdf plugin add nodejs
+asdf plugin add pulumi
 
+asdf install
+```
+
+### 依存パッケージのインストール
 ```bash
 pnpm install
 ```
 
-### 2. 環境変数の設定
+### 環境変数の設定
 
 `.env.test` を雛形として `.env.local` を作成する。
 
@@ -33,7 +41,7 @@ cp .env.test .env.local
 | `AUTH_GOOGLE_ID`     | Google OAuth クライアント ID（**要置き換え**）             |
 | `AUTH_GOOGLE_SECRET` | Google OAuth クライアントシークレット（**要置き換え**）    |
 
-### 3. Google OAuth クライアントの作成
+### Google OAuth クライアントの作成
 
 1. [Google Cloud Console](https://console.cloud.google.com/) を開く
 2. 「APIとサービス」→「認証情報」→「認証情報を作成」→「OAuth 2.0 クライアント ID」
@@ -43,7 +51,7 @@ cp .env.test .env.local
    - 本番環境: `https://<本番ドメイン>/api/auth/callback/google`
 5. 発行されたクライアント ID・シークレットを `.env.local` に記入
 
-### 4. 開発サーバーの起動
+### 開発サーバーの起動
 
 ```bash
 pnpm dev
