@@ -1,40 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Meetpie
 
-## Getting Started
+## 技術スタック
 
-First, run the development server:
+- [Next.js](https://nextjs.org/) 16 (App Router)
+- [Auth.js](https://authjs.dev/) v5 (next-auth@beta)
+- [Tailwind CSS](https://tailwindcss.com/) v4 + [daisyUI](https://daisyui.com/)
+- [Valibot](https://valibot.dev/) + [Conform](https://conform.guide/)
+- pnpm
+
+## セットアップ
+
+### 1. 依存関係のインストール
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. 環境変数の設定
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+`.env.test` を雛形として `.env.local` を作成する。
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+cp .env.test .env.local
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+> **注意:** `.env.test` の `AUTH_GOOGLE_ID` と `AUTH_GOOGLE_SECRET` はダミー値です。
+> コピー後、必ず実際の値に置き換えてください（手順 3 を参照）。
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| 変数名               | 説明                                                       |
+| -------------------- | ---------------------------------------------------------- |
+| `AUTH_SECRET`        | セッション暗号化用シークレット（`npx auth secret` で生成） |
+| `AUTH_GOOGLE_ID`     | Google OAuth クライアント ID（**要置き換え**）             |
+| `AUTH_GOOGLE_SECRET` | Google OAuth クライアントシークレット（**要置き換え**）    |
 
-## Learn More
+### 3. Google OAuth クライアントの作成
 
-To learn more about Next.js, take a look at the following resources:
+1. [Google Cloud Console](https://console.cloud.google.com/) を開く
+2. 「APIとサービス」→「認証情報」→「認証情報を作成」→「OAuth 2.0 クライアント ID」
+3. アプリケーションの種類：**ウェブアプリケーション**
+4. 承認済みリダイレクト URI に以下を追加:
+   - 開発環境: `http://localhost:3000/api/auth/callback/google`
+   - 本番環境: `https://<本番ドメイン>/api/auth/callback/google`
+5. 発行されたクライアント ID・シークレットを `.env.local` に記入
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+### 4. 開発サーバーの起動
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm dev
+```
 
-## Deploy on Vercel
+## コマンド
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm dev      # 開発サーバー起動
+pnpm build    # ビルド
+pnpm start    # 本番サーバー起動
+pnpm fmt      # フォーマットチェック
+pnpm fmt:w    # フォーマット適用
+pnpm lint     # lint チェック
+pnpm lint:w   # lint 自動修正
+pnpm check    # fmt + lint チェック
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+## 認証の使い方
+
+### サーバーコンポーネント
+
+```ts
+import { auth } from "@/auth";
+
+const session = await auth();
+// session?.user?.name, session?.user?.email
+```
+
+### クライアントコンポーネント
+
+このプロジェクトでは `SessionProvider` を導入していないため `useSession()` は使用できません。
+クライアントコンポーネントでセッション情報が必要な場合は、サーバーコンポーネントから props として渡してください。
+
+```tsx
+// サーバーコンポーネント（例: layout.tsx）
+import { auth } from "@/auth";
+
+const session = await auth();
+return <ClientComponent user={session?.user} />;
+```
+
+```tsx
+// クライアントコンポーネント
+"use client";
+
+import type { Session } from "next-auth";
+
+export function ClientComponent({ user }: { user: Session["user"] }) {
+  // user.name, user.email などを利用
+}
+```
+
+### サインイン / サインアウト（Server Actions）
+
+```tsx
+import { signIn, signOut } from "@/auth";
+
+// サインイン
+<form action={async () => { "use server"; await signIn("google"); }}>
+  <button>Google でログイン</button>
+</form>
+
+// サインアウト
+<form action={async () => { "use server"; await signOut(); }}>
+  <button>ログアウト</button>
+</form>
+```

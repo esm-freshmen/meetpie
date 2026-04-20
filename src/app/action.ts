@@ -2,6 +2,11 @@
 
 import { parseWithValibot } from "@conform-to/valibot";
 import { eventSchema } from "@/schema";
+import { signOut } from "@/auth";
+
+export async function handleSignOut() {
+  await signOut({ redirectTo: "/" });
+}
 
 export async function createEvent(prevState: unknown, formData: FormData) {
   const submission = parseWithValibot(formData, { schema: eventSchema });
