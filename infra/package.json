@@ -1,6 +1,14 @@
 {
     "name": "meetpie",
     "main": "index.ts",
+    "scripts": {
+        "deploy": "pulumi up",
+        "preview": "pulumi preview",
+        "destroy": "pulumi destroy",
+        "stack:ls": "pulumi stack ls",
+        "stack:output": "pulumi stack output",
+        "logs": "pulumi logs --follow"
+    },
     "devDependencies": {
         "@types/node": "^18",
         "typescript": "^5.0.0"
