@@ -10,7 +10,8 @@
     "fmt:w": "oxfmt",
     "lint": "oxlint",
     "lint:w": "oxlint --fix",
-    "check": "run-s -l fmt lint"
+    "check": "run-s -l fmt lint",
+    "build:lambda": "bash scripts/build-lambda.sh"
   },
   "dependencies": {
     "clsx": "^2.1.1",
