@@ -1,2 +1,10 @@
+secretsprovider: awskms://alias/pulumi-meetpie?region=ap-northeast-1
+encryptedkey: AQICAHjlThLCmPXZm9HMMVG2pC2NlsmwyIqM5So28Jjmd72OLgGS4bwRbjb5n3VvlhS8bsFZAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM9j3tK5/jsasACd1VAgEQgDsa1hlxXZb5zlrORiPqb8UcfUjrMrruURYK1cHtkMJo0hiGXGCLrbondK+FMAdK0eMS2XH0cloR59TYAg==
 config:
   aws:region: ap-northeast-1
+  meetpie:authSecret:
+    secure: v1:Em2+lPMDZIQO2o4q:zj2QZTfv6CwhwBFRp9IkZO2+s4zQdAMqrxDoHj/6ukl7abH/vmN7r/kJ70HhoRGY376A7v+nM9EtjRJR
+  meetpie:authGoogleId:
+    secure: v1:1EqkD7gajLffb7Sq:5lgF1dEDXCLtLJEbnrwMNXyryuW6w4r3798PP/bhjjyCSQZgBveQVg3yLmZSwK5T+jO5KuDbrvnYSSkpgqV/65hp/GGWm2BN/k3347Zdb4OamXl7Riq5gcA=
+  meetpie:authGoogleSecret:
+    secure: v1:QXpkaZCPzJWhvkWC:KeFOFuJOMMlNpFhTjzJ+rVJz2U54BJ5xBKoi+fcfOlYsBlKqk5Wiorq6bPCpbp3rnAPy

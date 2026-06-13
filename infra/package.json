@@ -2,12 +2,13 @@
     "name": "meetpie",
     "main": "index.ts",
     "scripts": {
-        "deploy": "pulumi up",
+        "login": "pulumi login s3://meetpie-pulumi-state",
+        "stack:init": "pulumi stack init prod --secrets-provider awskms://alias/pulumi-meetpie?region=ap-northeast-1",
+        "stack:rm": "pulumi stack rm prod",
         "preview": "pulumi preview",
+        "deploy": "pulumi up",
         "destroy": "pulumi destroy",
-        "stack:ls": "pulumi stack ls",
-        "stack:output": "pulumi stack output",
-        "logs": "pulumi logs --follow"
+        "output": "pulumi stack output"
     },
     "devDependencies": {
         "@types/node": "^18",

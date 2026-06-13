@@ -2,6 +2,10 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 
 const awsRegion = new pulumi.Config("aws").require("region");
+const config = new pulumi.Config();
+const authSecret = config.requireSecret("authSecret");
+const authGoogleId = config.requireSecret("authGoogleId");
+const authGoogleSecret = config.requireSecret("authGoogleSecret");
 
 // IAM role for Lambda
 const lambdaRole = new aws.iam.Role("meetpie-lambda-role", {
@@ -33,6 +37,10 @@ const lambdaFn = new aws.lambda.Function("meetpie-lambda", {
             AWS_LAMBDA_EXEC_WRAPPER: "/opt/bootstrap",
             AWS_LWA_ENABLE_COMPRESSION: "true",
             PORT: "8000",
+            AUTH_TRUST_HOST: "true",
+            AUTH_SECRET: authSecret,
+            AUTH_GOOGLE_ID: authGoogleId,
+            AUTH_GOOGLE_SECRET: authGoogleSecret,
         },
     },
     memorySize: 512,
