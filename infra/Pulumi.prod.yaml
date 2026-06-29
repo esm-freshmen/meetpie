@@ -8,3 +8,4 @@ config:
     secure: v1:+39gKJ0MR/oxq7ds:ZJGS+83IjRzOpi36ilzuVnE3uB0eMDe9ZdKGAaBOPCvsbrBvDK7crMnwk59a44Q/5aiRX0t4a5C58iS+VTcXDHg/u/DJ+/ZL57cEzEKFtSmr/TLiGJjmmAE=
   meetpie:authGoogleSecret:
     secure: v1:cm4MZ0myh0k28/3Y:yozFd9TzlF+oWe4m6icbqWqOkfhmV8N0M+r4eqPoijM7BP1R9j4Y65drKiv7bnaRMk2m
+  meetpie:authUrl: https://ddkrzcrbcgl6v.cloudfront.net

@@ -11,7 +11,8 @@
     "lint": "oxlint",
     "lint:w": "oxlint --fix",
     "check": "run-s -l fmt lint",
-    "build:lambda": "bash scripts/build-lambda.sh"
+    "build:lambda": "bash scripts/build-lambda.sh",
+    "deploy:lambda": "pnpm build:lambda && pnpm -C infra run deploy"
   },
   "dependencies": {
     "clsx": "^2.1.1",

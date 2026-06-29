@@ -9,6 +9,10 @@ const TAGS = { Name: "meetpie", ManagedBy: "pulumi" };
 const authSecret = config.requireSecret("authSecret");
 const authGoogleId = config.requireSecret("authGoogleId");
 const authGoogleSecret = config.requireSecret("authGoogleSecret");
+const authUrl = config.require("authUrl");
+
+// Lambda@Edge は us-east-1 にデプロイする必要がある
+const usEast1 = new aws.Provider("us-east-1", { region: "us-east-1" });
 
 // IAM role for Lambda
 const lambdaRole = new aws.iam.Role("meetpie-lambda-role", {
@@ -21,6 +25,43 @@ new aws.iam.RolePolicyAttachment("meetpie-lambda-basic-execution", {
     role: lambdaRole.name,
     policyArn: aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
 });
+
+// IAM role for Lambda@Edge — lambda と edgelambda 両方の service principal から AssumeRole 可能
+const edgeLambdaRole = new aws.iam.Role("meetpie-edge-lambda-role", {
+    assumeRolePolicy: JSON.stringify({
+        Version: "2012-10-17",
+        Statement: [
+            {
+                Action: "sts:AssumeRole",
+                Effect: "Allow",
+                Principal: {
+                    Service: ["lambda.amazonaws.com", "edgelambda.amazonaws.com"],
+                },
+            },
+        ],
+    }),
+});
+
+new aws.iam.RolePolicyAttachment("meetpie-edge-lambda-basic-execution", {
+    role: edgeLambdaRole.name,
+    policyArn: aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
+});
+
+// Lambda@Edge — Viewer Request で POST/PUT/PATCH のボディ SHA256 を計算して
+// x-amz-content-sha256 ヘッダに設定する。CloudFront OAC は SigV4 署名時に
+// このヘッダの値を使うため、Lambda Function URL 側で署名が一致するようになる。
+// これが無いと OAuth signin の POST が "signature mismatch" で失敗する。
+const signPayloadFn = new aws.lambda.Function("meetpie-edge-sign-payload", {
+    name: "meetpie-edge-sign-payload",
+    runtime: aws.lambda.Runtime.NodeJS22dX,
+    role: edgeLambdaRole.arn,
+    handler: "index.handler",
+    code: new pulumi.asset.FileArchive("./lambda-edge/sign-payload"),
+    publish: true,
+    timeout: 5,
+    memorySize: 128,
+    tags: TAGS,
+}, { provider: usEast1 });
 
 // Lambda Web Adapter layer (x86_64)
 // https://github.com/aws/aws-lambda-web-adapter
@@ -40,6 +81,7 @@ const lambdaFn = new aws.lambda.Function("meetpie-lambda", {
             AWS_LAMBDA_EXEC_WRAPPER: "/opt/bootstrap",
             AWS_LWA_ENABLE_COMPRESSION: "true",
             PORT: "8000",
+            AUTH_URL: authUrl,
             AUTH_TRUST_HOST: "true",
             AUTH_SECRET: authSecret,
             AUTH_GOOGLE_ID: authGoogleId,
@@ -89,19 +131,20 @@ const distribution = new aws.cloudfront.Distribution("meetpie-cf", {
         viewerProtocolPolicy: "redirect-to-https",
         allowedMethods: ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"],
         cachedMethods: ["GET", "HEAD"],
-        forwardedValues: {
-            queryString: true,
-            cookies: { forward: "all" },
-            headers: [
-                "Origin",
-                "Access-Control-Request-Headers",
-                "Access-Control-Request-Method",
-            ],
-        },
+        // CachingDisabled: TTL=0、キャッシュなし
+        cachePolicyId: "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+        // AllViewerExceptHostHeader: cookie・クエリ・ヘッダーをすべて転送（Host除く）
+        originRequestPolicyId: "b689b0a8-53d0-40ab-baf2-68738e2966ac",
         compress: true,
-        minTtl: 0,
-        defaultTtl: 0,
-        maxTtl: 0,
+        // Viewer Request で POST/PUT/PATCH のボディ SHA256 を x-amz-content-sha256 に設定
+        // （OAC が Lambda Function URL に SigV4 署名する際の整合性のため）
+        lambdaFunctionAssociations: [
+            {
+                eventType: "viewer-request",
+                lambdaArn: signPayloadFn.qualifiedArn,
+                includeBody: true,
+            },
+        ],
     },
     restrictions: {
         geoRestriction: { restrictionType: "none" },

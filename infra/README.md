@@ -35,7 +35,12 @@ pnpm stack:init
 pulumi config set --secret meetpie:authSecret <値>
 pulumi config set --secret meetpie:authGoogleId <値>
 pulumi config set --secret meetpie:authGoogleSecret <値>
+# CloudFront の URL を authUrl に設定
+# 初回デプロイ時は発行されていないため、再デプロイ時に設定が必要
+pulumi config set meetpie:authUrl <cloudFrontUrl の値>
+
 pnpm deploy
+
 # Pulumi.prod.yaml をコミット
 ```
 
