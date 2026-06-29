@@ -11,7 +11,9 @@
 ## セットアップ
 
 ### Node.js & Pulumi インストール
+
 asdf
+
 ```bash
 asdf plugin add nodejs
 asdf plugin add pulumi
@@ -20,6 +22,7 @@ asdf install
 ```
 
 ### 依存パッケージのインストール
+
 ```bash
 pnpm install
 ```

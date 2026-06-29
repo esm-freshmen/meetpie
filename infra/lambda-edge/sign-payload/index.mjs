@@ -13,9 +13,10 @@ export const handler = async (event) => {
 
   let body = Buffer.alloc(0);
   if (request.body?.data) {
-    body = request.body.encoding === "base64"
-      ? Buffer.from(request.body.data, "base64")
-      : Buffer.from(request.body.data, "utf8");
+    body =
+      request.body.encoding === "base64"
+        ? Buffer.from(request.body.data, "base64")
+        : Buffer.from(request.body.data, "utf8");
   }
 
   const hash = createHash("sha256").update(body).digest("hex");
