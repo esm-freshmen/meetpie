@@ -1,5 +1,5 @@
 {
-  "name": "meetpie",
+  "name": "infra",
   "main": "index.ts",
   "scripts": {
     "login": "pulumi login s3://meetpie-pulumi-state",
@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@pulumi/aws": "^7.0.0",
-    "@pulumi/awsx": "^3.0.0",
     "@pulumi/pulumi": "^3.113.0"
   },
   "devDependencies": {
