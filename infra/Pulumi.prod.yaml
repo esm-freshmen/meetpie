@@ -1,0 +1,11 @@
+secretsprovider: awskms://alias/pulumi-meetpie?region=ap-northeast-1
+encryptedkey: AQICAHjlThLCmPXZm9HMMVG2pC2NlsmwyIqM5So28Jjmd72OLgGS4bwRbjb5n3VvlhS8bsFZAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM9j3tK5/jsasACd1VAgEQgDsa1hlxXZb5zlrORiPqb8UcfUjrMrruURYK1cHtkMJo0hiGXGCLrbondK+FMAdK0eMS2XH0cloR59TYAg==
+config:
+  aws:region: ap-northeast-1
+  meetpie:authSecret:
+    secure: v1:rxNonapZBCNsOrTM:hGzOb3wGEeaoSkUo5WBgpQl1nKpew0NDdP3cJEBmdl6Z7oXy7EgMo4i+w6G9Vzi9dqhRVdanL1AasdfCV4d4U2X4GaaZ7CR+qnCsRL4WYSw=
+  meetpie:authGoogleId:
+    secure: v1:+39gKJ0MR/oxq7ds:ZJGS+83IjRzOpi36ilzuVnE3uB0eMDe9ZdKGAaBOPCvsbrBvDK7crMnwk59a44Q/5aiRX0t4a5C58iS+VTcXDHg/u/DJ+/ZL57cEzEKFtSmr/TLiGJjmmAE=
+  meetpie:authGoogleSecret:
+    secure: v1:cm4MZ0myh0k28/3Y:yozFd9TzlF+oWe4m6icbqWqOkfhmV8N0M+r4eqPoijM7BP1R9j4Y65drKiv7bnaRMk2m
+  meetpie:authUrl: https://ddkrzcrbcgl6v.cloudfront.net

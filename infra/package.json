@@ -1,0 +1,21 @@
+{
+  "name": "infra",
+  "main": "index.ts",
+  "scripts": {
+    "login": "pulumi login s3://meetpie-pulumi-state",
+    "stack:init": "pulumi stack init prod --secrets-provider awskms://alias/pulumi-meetpie?region=ap-northeast-1",
+    "stack:rm": "pulumi stack rm prod",
+    "preview": "pulumi preview",
+    "deploy": "pulumi up",
+    "destroy": "pulumi destroy",
+    "output": "pulumi stack output"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^7.0.0",
+    "@pulumi/pulumi": "^3.113.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "typescript": "^5.0.0"
+  }
+}
